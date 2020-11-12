@@ -1,0 +1,61 @@
+<div class="panel-group" id="pg">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <a href="{{:url('admin/index/index')}}" data-parent="#pg">
+                <h3 class="panel-title">首页</h3>
+            </a>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <a href="#category" data-toggle="collapse" data-parent="#pg">
+                <h3 class="panel-title">分类管理</h3>
+            </a>
+        </div>
+        <div id="category" {{if condition="request()->controller() == 'Category' 
+            || request()->controller() == 'Index'"}} class="collapse in" {{else}} class="collapse" {{/if}}>
+            <div class="panel-body" style="padding: 0;">
+                <ul class="list-group" style="margin: 0">
+                    <li class="list-group-item"><a href="{{:url('admin/category/add')}}">分类添加</a></li>
+                    <li class="list-group-item"><a href="{{:url('admin/category/index')}}">分类列表</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <a href="#article" data-toggle="collapse" data-parent="#pg">
+                <h3 class="panel-title">文章管理</h3>
+            </a>
+        </div>
+        <div id="article" {{if condition="request()->controller() == 'Article'"}} class="collapse in" {{else}}
+            class="collapse" {{/if}}>
+            <div class="panel-body" style="padding: 0;">
+                <ul class="list-group" style="margin: 0">
+                    <li class="list-group-item"><a href="{{:url('admin/article/add')}}">发表文章</a></li>
+                    <li class="list-group-item"><a href="{{:url('admin/article/index')}}">文章列表</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <a href="#user" data-toggle="collapse" data-parent="#pg">
+                <h3 class="panel-title">用户管理</h3>
+            </a>
+        </div>
+        <div id="user" {{if condition=
+            "request()->controller() == 'User' || request()->controller() == 'Admin'
+            || request()->controller() == 'Comment'"}} class="collapse in" {{else}} class="collapse" {{/if}}>
+            <div class="panel-body" style="padding: 0;">
+                <ul class="list-group" style="margin: 0">
+                    <li class="list-group-item"><a href="{{:url('admin/user/index')}}">普通用户列表</a></li>
+                    <li class="list-group-item"><a href="{{:url('admin/admin/index')}}">管理员列表</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

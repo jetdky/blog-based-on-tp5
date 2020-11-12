@@ -1,0 +1,79 @@
+{{extend name="public/base"}}
+{{block name="title"}}用户登录{{/block}}
+{{block name="content"}}
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-9">
+            <h3 class="page-header">用户登录</h3>
+            <form action="{{:url('index/user/doLogin')}}" class="form-horizontal" method="post">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label class="control-label">用户名</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" name="username" class="form-control" autofocus>
+                    </div>
+                    <div class="col-sm-7">
+                        <span class="help-block">用户名不能为空</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label class="control-label">密码</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="password" name="password" class="form-control">
+                    </div>
+                    <div class="col-sm-7">
+                        <span class="help-block">密码不能为空</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label class="control-label">验证码</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" name="captcha" class="form-control">
+                    </div>
+                    <div class="col-sm-7">
+                        <span class="help-block">验证码不能为空</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-5 col-sm-offset-5">
+                        <img src="{{:captcha_src()}}" id="captcha">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-5 col-sm-offset-2">
+                        <input type="submit" value="登录" class="btn btn-primary"> &nbsp;&nbsp;
+                        <input type="reset" value="取消" class="btn btn-default">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3 hidden-sm hidden-xs">
+            <ul class="list-group">
+                <h3 class="page-header" style="margin-top:0; margin-bottom: 20px;">阅读排行榜</h3>
+                {{volist name="readList" id="v"}}
+                <li class="list-group-item">
+                    <a href="{{:url('index/article/read',['id' => $v.id, 'bool' => 1])}}" title="{{$v.subject}}">{{$v.subject|mb_substr=0,5}}..</a>
+                    <span class="badge">{{$v.browse_times}}</span>
+                </li>
+                {{/volist}}
+            </ul>
+        </div>
+    </div>
+{{/block}}
+{{block name="js"}}
+    <script type="text/javascript">
+    //实现点击更新，还可以防止浏览器缓存验证码
+        var captcha = document.getElementById('captcha');
+        captcha.onclick = function (){
+            this.src = "{{:captcha_src()}}?r=" + Math.random();
+        }
+    </script>
+{{/block}}

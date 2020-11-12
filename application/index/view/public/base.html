@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>{{block name="title"}}首页{{/block}}</title>
+    {{load file="__STATIC__/bootstrap/css/bootstrap.css"}}
+    {{block name="css"}}{{/block}}
+</head>
+
+<body>
+    <div class="container">
+        {{include file="public/header"}}
+        {{block name="content"}}{{/block}}
+        {{include file="public/footer"}}
+    </div>
+    {{load file="__JS__/jquery-3.4.1.min.js"}}
+    {{load file="__STATIC__/bootstrap/js/bootstrap.js"}}
+    {{block name="js"}}{{/block}}
+</body>
+
+</html>

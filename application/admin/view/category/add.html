@@ -1,0 +1,30 @@
+{{extend name="public/base"}}
+{{block name="content"}}
+<h4 class="page-header">分类添加</h4>
+<form action="{{:url('admin/category/doadd')}}" method="post" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">分类名</label>
+        </div>
+        <div class="col-sm-7">
+            <input type="text" name="category_name" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">优先级</label>
+        </div>
+        <div class="col-sm-7">
+            <input type="text" name="sort_number" class="form-control">
+        </div>
+    </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2 col-sm-offset-4">
+            <input type="submit" value="提交" class="btn btn-primary">
+            <input type="reset" value="取消" class="btn btn-default">
+        </div>
+    </div>
+</form>
+{{/block}}

@@ -1,0 +1,42 @@
+{{extend name="public/base"}}
+{{block name="title"}}管理员列表{{/block}}
+{{block name="css"}}
+{{load file="__CSS__/selftable.css"}}
+{{/block}}
+{{block name="content"}}
+<h4 class="page-header">
+  管理员列表 &nbsp;
+  <a href="{{:url('admin/admin/add')}}" title="新增管理员">
+    <span class="glyphicon glyphicon-plus text-danger"></span>
+  </a>
+</h4>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-striped table-condensed tablelist">
+    <tr>
+      <td>用户名</td>
+      <td>昵称</td>
+      <td>身份</td>
+      <td>创建时间</td>
+      <td>操作菜单</td>
+    </tr>
+    {{volist name="adminList" id="v"}}
+    <tr>
+      <td>{{$v.username}}</td>
+      <td>{{$v->nick_name}}</td>
+      <td>{{$v->role->role_name}}</td>
+      <td>{{$v->created_at}}</td>
+      <td>
+        <a href="{{:url('admin/admin/article', ['id' => $v.id])}}" title="查看">
+          <span class="glyphicon glyphicon-search text-info"></span></span></a>
+        <a href="{{:url('admin/admin/edit', ['id' => $v.id])}}" title="编辑">
+          <span class="glyphicon glyphicon-pencil text-success"></span></a>
+        <a href="{{:url('admin/admin/del', ['id' => $v.id])}}" title="删除">
+          <span class="glyphicon glyphicon-trash text-danger"></a>
+      </td>
+    </tr>
+    {{/volist}}
+  </table>
+</div>
+
+{{/block}}

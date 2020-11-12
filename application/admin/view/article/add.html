@@ -1,0 +1,74 @@
+{{extend name="public/base"}}
+{{block name="content"}}
+<h4 class="page-header">发表文章</h4>
+<form action="{{:url('admin/article/doAdd')}}" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">文章标题</label>
+        </div>
+        <div class="col-sm-7">
+            <input type="text" name="subject" class="form-control">
+        </div>
+        <div class="col-sm-3">
+            <span class="help-block">文章标题不能为空</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">分类</label>
+        </div>
+        <div class="col-sm-7">
+            <select name="category_id" class="form-control">
+                {{volist name="categoryList" id="v"}}
+                <option value="{{$v.id}}">{{$v.category_name}}</option>
+                {{/volist}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">标题图片</label>
+        </div>
+        <div class="col-sm-7">
+            <input type="file" name="subject_picture" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">文章内容</label>
+        </div>
+        <div class="col-sm-7">
+            <textarea style="width:100%;height:350px;"
+             name="content" rows="10" id="container"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">文章状态</label>
+        </div>
+        <div class="col-sm-7">
+            <input type="radio" name="is_online" value="1" checked="">上线
+            <input type="radio" name="is_online" value="0">下线
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <input type="submit" value="发表" class="btn btn-primary">
+            <input type="reset" value="取消" class="btn btn-default">
+        </div>
+    </div>
+</form>
+{{/block}}
+
+{{block name="js"}}
+{{load file="__STATIC__/ueditor/ueditor.config.js"}}
+{{load file="__STATIC__/ueditor/ueditor.all.js"}}
+<script type="text/javascript">
+    var ue = UE.getEditor('container');
+</script>
+{{/block}}

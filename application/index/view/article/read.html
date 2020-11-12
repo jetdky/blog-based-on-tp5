@@ -1,0 +1,152 @@
+<!-- 页面中需要显示文章，排行榜，以及完成评论上传和显示 -->
+{{extend name="public/base"}}
+{{block name="css"}}
+<style type="text/css">
+    .comment-body {
+        width: 95%;
+        height: 200px;
+        border: 1px solid #CCCCCC;
+        background-color: #F7F8FA;
+        border-radius: 5px;
+        margin: 0 auto;
+    }
+
+    .comment-right {
+        float: right;
+    }
+
+    .comment-body div:first-child {
+        height: 10px;
+        margin: 10px;
+    }
+
+    .comment-body div:first-child span:first-child {
+        line-height: 10px;
+        vertical-align: middle;
+    }
+
+    .t1 {
+        width: 90%;
+        height: 120px;
+        border: 1px solid #E5E5E5;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+        margin: 20px auto 40px;
+        resize: none;
+        display: block;
+        font-size: 18px;
+    }
+</style>
+{{/block}}
+{{block name="content"}}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-9">
+        <h3 class="page-header" style="margin-top: 0px;">{{$articleDetail.subject}}</h3>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                作者：{{$articleDetail->author->username}}&nbsp;&nbsp;
+                发表于{{$articleDetail.created_at}}&nbsp;&nbsp;
+                <div style="display: inline-block;">
+                    <span class="glyphicon glyphicon-eye-open"
+                        style="vertical-align: middle;"></span>&nbsp;{{$articleDetail.browse_times}}&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-comment" style="vertical-align: middle;"></span>
+                    {{$articleDetail.comment_number}}
+                </div>
+            </div>
+            <div class="panel-body">
+                <img src="__STATIC__/upload/{{$articleDetail.subject_picture}}" alt="" class="img-responsive">
+                {{$articleDetail.content}}
+            </div>
+        </div>
+        <form action="{{:url('index/comment/save')}}" method="post">
+            {{if condition="!$Think.session.user"}}
+            <div class="comment-body">
+                <div>
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;我来说两句
+                    <span class="comment-right">共&nbsp;<span
+                            style="color:red">{{$articleDetail.comment_number}}</span>&nbsp;条评论</span>
+                </div>
+                <div class="text-center t1">
+                    <span style="vertical-align: middle;line-height: 120px;">请先
+                        <a href="{{:url('index/user/login')}}">登录</a></span>
+                </div>
+            </div>
+            {{else}}
+            <div class="comment-body">
+                <div>
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;我来说两句
+                    <span class="comment-right">共&nbsp;<span
+                            style="color:red">{{$articleDetail.comment_number}}</span>&nbsp;条评论</span>
+                </div>
+                <div>
+                    <textarea class="t1" name="comment"></textarea>
+                    <div style="margin-top: -37px; margin-left: 5%;">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                        <button type="reset" class="btn btn-default">取消</button>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            <input type="hidden" name="comment_id" value="{{:input('param.id')}}">
+            <input type="hidden" name="comment_type" value="Article">
+        </form>
+        <hr>
+        {{if condition="$comments"}}
+        {{volist name="comments" id="v"}}
+        <div class="row" style="margin-bottom: 50px;">
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                {{if condition="$v->user->user_photo"}}
+                <img src="__STATIC__/portrait/{{$v->user->user_photo}}" style="height: 55px; width: 55px;"
+                    class="img-circle" alt="">
+                {{else}}
+                <img src="__STATIC__/portrait/default.png" style="height: 55px;" class="img-circle" alt="">
+                {{/if}}
+            </div>
+            <div class="col-md-11 col-sm-11 col-xs-11">
+                <div style="height: 45px;" class="col-sm-11 col-xs-11">
+                    <div style="color: #CA1D18; font-size: 18px;">{{$v->user->nick_name}}</div>
+                    <div style="vertical-align: bottom; font-size: 16px;">{{$v.comment}}</div>
+                    <div style="color: #999999; margin-top: 10px;"><span
+                            class="glyphicon glyphicon-time"></span>&nbsp;{{$v.created_at}}</div>
+                </div>
+            </div>
+        </div>
+        {{/volist}}
+        {{$comments->render()}}
+        {{/if}}
+    </div>
+    <div class="col-xs-4 col-md-3 hidden-sm hidden-xs">
+        <ul class="list-group">
+            <h3 class="page-header" style="margin-top:0; margin-bottom: 20px;">阅读排行榜</h3>
+            {{volist name="readList" id="v"}}
+            <li class="list-group-item">
+                <a href="{{:url('index/article/read',['id' => $v.id, 'bool' => 1])}}"
+                    title="{{$v.subject}}">{{$v.subject|mb_substr=0,5}}..</a>
+                <span class="badge">{{$v.browse_times}}</span>
+            </li>
+            {{/volist}}
+        </ul>
+        <ul class="list-group">
+            <h3 class="page-header">最新文章</h3>
+            {{volist name="recentList" id="v"}}
+            <li class="list-group-item">
+                <a href="{{:url('index/article/read',['id' => $v.id, 'bool' => 1])}}"
+                    title="{{$v.subject}}">{{$v.subject|mb_substr=0,5}}..</a>
+            </li>
+            {{/volist}}
+        </ul>
+    </div>
+</div>
+{{/block}}
+{{block name="js"}}
+<script type="text/javascript">
+    $('.list-group-item').each(function (k, v) {
+        $(v).hover(function () {
+            $(v).css('background-color', '#F8F8F8');
+        }, function () {
+            $(v).css('background-color', 'transparent');
+        });
+    });
+
+</script>
+{{/block}}

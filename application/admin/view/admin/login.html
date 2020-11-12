@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>管理员登录</title>
+
+    {{load file="__STATIC__/bootstrap/css/bootstrap.css"}}
+    {{load file="__CSS__/signin.css"}}
+</head>
+
+<body>
+
+    <div class="container">
+
+        <form action="{{:url('admin/admin/doLogin')}}" method="post" class="form-signin">
+            <h2 class="form-signin-heading">博客后台管理</h2>
+            <label for="username" class="sr-only">用户名</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required autofocus 
+            {{if condition="cookie('?admin')"}}
+            value="{{:cookie('admin')['username']}}"
+            {{/if}}
+                style="margin-bottom: 10px;">
+            <label for="password" class="sr-only">用户名</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="密码" required
+            {{if condition="cookie('?admin')"}}
+            value="{{:cookie('admin')['password']}}"
+            {{/if}}
+            >
+            <div class="row">
+                <div class="col-sm-6 col-sm-5">
+                    <label for="captcha" class="sr-only">验证码</label>
+                    <input type="text" id="captcha" name="captcha" class="form-control" placeholder="验证码" required>
+                </div>
+                <div class="col-sm-6 col-sm-5 col-sm-offset-2">
+                    <img src="{{:captcha_src()}}"
+                        onclick="this.src = this.src + '?r=' + Math.random()" id="captcha" style="width: 100%; margin-top: 5px;">
+                </div>
+                
+            </div>
+            <label style="color: #337ab7;" class="col-sm-offset-8">点击图片换一张</label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="remember_me" 
+                    {{if condition="cookie('?admin')"}}
+                    checked
+                    {{/if}}> 记住我
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        </form>
+
+    </div>
+    {{load file="__JS__/jquery-3.4.1.min.js"}}
+    {{load file="__STATIC__/bootstrap/js/bootstrap.js"}}
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+{{extend name="public/base"}}
+{{block name="title"}}用户列表{{/block}}
+{{block name="css"}}
+{{load file="__CSS__/selftable.css"}}
+{{/block}}
+{{block name="content"}}
+            <h4 class="page-header">用户列表</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped table-condensed tablelist">
+                  <tr>
+                    <td>用户名</td>
+                    <td>昵称</td>
+                    <td>注册时间</td>
+                    <td>操作菜单</td>
+                  </tr>
+                {{volist name="userList" id="v"}}
+                  <tr>
+                    <td>{{$v.username}}</td>
+                    <td>{{$v.nick_name}}</td>
+                    <td>{{$v.created_at}}</td>
+                    <td>
+                      <a href="{{:url('admin/user/articles', ['id' => $v.id])}}" title="查看评论">
+                          <span class="glyphicon glyphicon-search text-info"></span></span></a>
+                      <a href="{{:url('admin/user/del', ['id' => $v.id])}}" title="删除">
+                          <span class="glyphicon glyphicon-trash text-danger"></a>
+                    </td>
+                  </tr>
+                  {{/volist}}
+                </table>
+              </div>
+              {{$userList->render()}}
+{{/block}}
+       

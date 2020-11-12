@@ -1,0 +1,39 @@
+{{extend name="public/base"}}
+{{block name="title"}}控制台{{/block}}
+{{block name="content"}}
+<h4 class="page-header">首页</h4>
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped table-condensed">
+            <tr>
+                <td>ThinkPHP版本</td>
+                <td>{{:THINK_VERSION}}</td>
+            </tr>
+            <tr>
+                <td>PHP版本</td>
+                <td>{{:PHP_VERSION}}</td>
+            </tr>
+            <tr>
+                <td>MySQL版本</td>
+                <td>{{$version}}</td>
+            </tr>
+            <tr>
+                <td>网站目录</td>
+                <td>{{:THINK_PATH}}</td>
+            </tr>
+            <tr>
+                <td>运行环境</td>
+                <td>{{:PHP_SAPI}}</td>
+            </tr>
+            <tr>
+                <td>上传文件最大字节数</td>
+                <td>{{:ini_get('upload_max_filesize')}}</td>
+            </tr>
+            <tr>
+                <td>程序最大执行时间</td>
+                <td>{{:ini_get('max_execution_time')}}S</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{{/block}}

@@ -1,0 +1,29 @@
+{{extend name="public/base"}}
+{{block name="title"}}用户列表{{/block}}
+{{block name="css"}}
+{{load file="__CSS__/selftable.css"}}
+{{/block}}
+{{block name="content"}}
+<h4 class="page-header">{{$user->nick_name}} 评论的文章</h4>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-striped table-condensed tablelist">
+    <tr>
+      <td>文章标题</td>
+      <td>发表时间</td>
+      <td>查看评论</td>
+    </tr>
+    {{volist name="articles" id="v"}}
+    <tr>
+      <td title="{{$v->subject->subject}}">{{$v->subject->subject|mb_substr=0,5}}...</td>
+      <td>{{$v.created_at}}</td>
+      <td>
+        <a href="{{:url('admin/comment/read', 
+                      ['id' => $v.comment_id, 'subject' => $v->subject->subject, 
+                      'nick_name' => $user->nick_name, 'user_id' => $user->id])}}" title="查看">
+          <span class="glyphicon glyphicon-search"></span></span></a>
+      </td>
+    </tr>
+    {{/volist}}
+  </table>
+</div>
+{{/block}}
